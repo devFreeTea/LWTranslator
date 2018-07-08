@@ -1,0 +1,147 @@
+@{
+    ViewData["Title"] = "Translate";
+}
+<h2>@ViewData["Translate"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+  <style>
+    .content-3-col {
+      display: grid;
+      grid-template-columns: 2fr 2fr 2fr;
+      align-items: flex-start;
+      justify-items: center;
+      height: 300px;
+    }
+
+    .content-3-col div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0;
+    }
+
+    .content-3-col div:nth-child(2) {
+      display: flex;
+      align-self: center;
+    }
+    
+    .content-3-col div:nth-child(2) div {
+      margin-top: 20px;
+    }
+
+    .content-3-col div:nth-child(2) button {
+      width: 200px;
+    }
+    
+    .content-3-col div:nth-child(2) .alert {
+      overflow: hidden;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: 0.2s transform;
+    }
+
+    .content-3-col .flex-row {
+      display: flex;
+      flex-direction: row;
+    }
+    
+    .content-3-col .flex-row * {
+      margin: auto 20px;
+    }
+
+    .form-group * {
+      margin-top: 20px;
+    }
+  </style>
+
+  <div class="content-3-col">
+    <div class="form-group">
+      <label for="txtEnterText">Enter Text</label> 
+      <textarea class="form-control" id="txtEnterText" rows="7"></textarea>
+    </div>
+
+    <div class="form-group">
+      <div class="form-group flex-row">
+        <select class="form-control" id="ddl-from">
+        </select>
+        <label for="txtEnterText">To</label> 
+        <select class="form-control" id="ddl-to">
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="check()">Translate</button>
+      <div id="alert-message" class="alert alert-danger" role="alert">
+        Sorry we don't support these language translation
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="txtEnterText">Output Text</label>
+      <textarea class="form-control" id="txtOutputText" rows="7" readonly></textarea>
+    </div>
+  </div>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
+  var dirs = [];
+
+  window.onload = function() {
+    $.get('https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=trnsl.1.1.20180707T114935Z.d1a2e191ec27a376.a0ea93bb5c564029069078f2ec430098df27bae4&ui=en', function(data) {
+      dirs = data.dirs;
+      dirs.push('en-id');
+      dirs.push('id-en');
+      var langs_keys = Object.keys(data.langs);
+      var langs_value = Object.values(data.langs);
+
+      for (var i = 0; i < langs_keys.length; i++) {
+        var option = document.createElement('option');
+        option.setAttribute('value', langs_keys[i]);
+        var t = document.createTextNode(langs_value[i]);
+        option.appendChild(t);
+
+        var option2 = document.createElement('option');
+        option2.setAttribute('value', langs_keys[i]);
+        var t2 = document.createTextNode(langs_value[i]);
+        option2.appendChild(t2);
+
+        document.getElementById('ddl-from').appendChild(option);
+        document.getElementById('ddl-from').value = 'en';
+        document.getElementById('ddl-to').appendChild(option2);
+        document.getElementById('ddl-to').value = 'ru';
+      }
+    });
+  }
+
+  function check() {
+    var alert = document.getElementById('alert-message');
+    alert.style.transform = 'scaleY(0)';
+
+    setTimeout(function() {
+      var transl_lang = document.getElementById('ddl-from').value + '-' + document.getElementById('ddl-to').value;
+      var stats = 'error';
+      for (var  i =0; i < dirs.length; i++) {
+        if (transl_lang == dirs[i]) {
+          stats = 'valid';
+        }
+      }
+
+      if (stats == 'valid') {
+        var text = document.getElementById('txtEnterText').value;
+        translate(text, transl_lang);
+      } else {
+        alert.style.transform = 'scaleY(1)';
+      }
+    }, 500)
+  }
+  
+  function translate(text, lang) {
+    $.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20180707T114935Z.d1a2e191ec27a376.a0ea93bb5c564029069078f2ec430098df27bae4&text=' + text + '&lang=' + lang, function(data) {
+      document.getElementById('txtOutputText').value = data.text[0];
+      console.log(data.text[0]);
+    });
+  }
+</script>

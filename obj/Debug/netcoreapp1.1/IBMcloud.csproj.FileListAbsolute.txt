@@ -1,0 +1,9 @@
+C:\Users\Sam\Desktop\IBMcloud\bin\Debug\netcoreapp1.1\IBMcloud.deps.json
+C:\Users\Sam\Desktop\IBMcloud\bin\Debug\netcoreapp1.1\IBMcloud.runtimeconfig.json
+C:\Users\Sam\Desktop\IBMcloud\bin\Debug\netcoreapp1.1\IBMcloud.runtimeconfig.dev.json
+C:\Users\Sam\Desktop\IBMcloud\bin\Debug\netcoreapp1.1\IBMcloud.dll
+C:\Users\Sam\Desktop\IBMcloud\bin\Debug\netcoreapp1.1\IBMcloud.pdb
+C:\Users\Sam\Desktop\IBMcloud\obj\Debug\netcoreapp1.1\IBMcloud.csproj.CoreCompileInputs.cache
+C:\Users\Sam\Desktop\IBMcloud\obj\Debug\netcoreapp1.1\IBMcloud.AssemblyInfo.cs
+C:\Users\Sam\Desktop\IBMcloud\obj\Debug\netcoreapp1.1\IBMcloud.dll
+C:\Users\Sam\Desktop\IBMcloud\obj\Debug\netcoreapp1.1\IBMcloud.pdb

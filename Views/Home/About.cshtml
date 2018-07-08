@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "About the web apps";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<style>
+    .grid-2-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr
+    }
+
+    .grid-2-col > div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grid-2-col > div h4 {
+        text-align: center;
+    }
+
+    .grid-2-col .card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        margin: 12px auto;
+    }
+
+    .grid-2-col .card img {
+        width: 200px;
+        height: auto;
+    }
+
+    .grid-2-col .card p {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+</style>
+
+<div class="grid-2-col">
+    <div class="service">
+        <h4>Service Provider</h4>
+        <div class="card">
+            <img src="https://i.imgur.com/6H8GPt9.png" alt="imbcloud">
+            <p>
+                IBM Bluemix is a cloud platform as a service (PaaS) developed by IBM. It supports several programming languages and services as well as integrated DevOps to build, run, deploy and manage applications on the cloud. Bluemix is based on Cloud Foundry open technology and runs on SoftLayer infrastructure.
+            </p>
+        </div>
+        <div class="card">
+            <img src="https://i.imgur.com/EVyiaaZ.png" alt="yandex">
+            <p>
+                Yandex N.V. is a multinational corporation specializing in Internet-related services and products. Yandex is an AI company that provides search and information services, eCommerce, transportation, navigation, and other mobile applications in addition to offering online advertising.
+            </p>
+        </div>
+    </div>
+    <div class="frameworks">
+        <h4>Frameworks Used</h4>
+        <div class="card">
+            <img src="https://i.imgur.com/1d1x6ng.png" alt="netcore">
+            <p>
+                .NET Core is a general purpose development platform maintained by Microsoft and the .NET community on GitHub. It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios.
+            </p>
+        </div>
+        <div class="card">
+            <img src="https://i.imgur.com/2XbWVy3.png" alt="bootstrap">
+            <p>
+                Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your ideas or build your entire app with our Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful plugins built on jQuery.
+            </p>
+        </div>
+    </div>
+</div>
