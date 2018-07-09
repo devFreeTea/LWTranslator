@@ -65,6 +65,7 @@
     <div class="form-group">
       <div class="form-group flex-row">
         <select class="form-control" id="ddl-from">
+          <option value="Auto">Auto Detect</option>
         </select>
         <label for="txtEnterText">To</label> 
         <select class="form-control" id="ddl-to">
@@ -72,7 +73,7 @@
       </div>
       <button type="button" class="btn btn-primary" onclick="check()">Translate</button>
       <div id="alert-message" class="alert alert-danger" role="alert">
-        Sorry we don't support these language translation
+        Oops looks like something bad happened, sorry...
       </div>
     </div>
 
@@ -91,9 +92,6 @@
 
   window.onload = function() {
     $.get('https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=trnsl.1.1.20180707T114935Z.d1a2e191ec27a376.a0ea93bb5c564029069078f2ec430098df27bae4&ui=en', function(data) {
-      dirs = data.dirs;
-      dirs.push('en-id');
-      dirs.push('id-en');
       var langs_keys = Object.keys(data.langs);
       var langs_value = Object.values(data.langs);
 
@@ -117,31 +115,27 @@
   }
 
   function check() {
+    document.getElementById('txtOutputText').value = '';
     var alert = document.getElementById('alert-message');
     alert.style.transform = 'scaleY(0)';
 
     setTimeout(function() {
-      var transl_lang = document.getElementById('ddl-from').value + '-' + document.getElementById('ddl-to').value;
-      var stats = 'error';
-      for (var  i =0; i < dirs.length; i++) {
-        if (transl_lang == dirs[i]) {
-          stats = 'valid';
-        }
-      }
-
-      if (stats == 'valid') {
-        var text = document.getElementById('txtEnterText').value;
-        translate(text, transl_lang);
+      var text = document.getElementById('txtEnterText').value;
+      var from = document.getElementById('ddl-from').value;
+      var to = document.getElementById('ddl-to').value;
+      if (from == 'Auto') {
+        var lang = to;
       } else {
-        alert.style.transform = 'scaleY(1)';
+        var lang = from + '-' + to;
       }
+      $.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20180707T114935Z.d1a2e191ec27a376.a0ea93bb5c564029069078f2ec430098df27bae4&text=' + text + '&lang=' + lang, function(data) {
+        if (data.code == '200') {
+          document.getElementById('txtOutputText').value = data.text[0];
+        } else {
+          document.getElementById('alert-message').innerHTML = data.message;
+          alert.style.transform = 'scaleY(1)';
+        }
+      });
     }, 500)
-  }
-  
-  function translate(text, lang) {
-    $.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20180707T114935Z.d1a2e191ec27a376.a0ea93bb5c564029069078f2ec430098df27bae4&text=' + text + '&lang=' + lang, function(data) {
-      document.getElementById('txtOutputText').value = data.text[0];
-      console.log(data.text[0]);
-    });
   }
 </script>
