@@ -40,11 +40,35 @@
         text-align: justify;
         text-justify: inter-word;
     }
+
+    .grid-2-col .github {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .github .pull-right {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .github .pull-right a {
+        color: #111;
+        transition: 0.5s transform ease-in-out;
+    }
+    
+    .github .pull-right a:hover {
+        transform: rotate(45deg);
+    }
 </style>
 
 <div class="grid-2-col">
-    <div class="applications span-2">
+    <div class="applications">
         <p>The terms lightweight means this app runs on user's device and receive results from api instead of processing it on the server. It uses JS to process the response and show it on user's device</p>
+    </div>
+    <div class="github">
+        <div class="pull-right">    
+            <a href="https://github.com/devFreeTea/LWTranslator"><i class="fab fa-github fa-4x"></i></a>
+        </div>
     </div>
     <div class="service">
         <h4>Service Provider</h4>
